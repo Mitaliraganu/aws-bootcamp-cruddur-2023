@@ -1,0 +1,35 @@
+{
+  "AlarmName": "AWS Bootcamp billing alert",
+  "AlarmDescription": "No description",
+  "ActionsEnabled": true,
+  "AlarmActions": [
+      "arn:aws:cloudwatch:us-east-1:***REMOVED**:alarm:AWS Bootcamp billing alert"
+  ],
+  "EvaluationPeriods": 1,
+  "DatapointsToAlarm": 1,
+  "Threshold": 1,
+  "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+  "TreatMissingData": "breaching",
+  "Metrics": [{
+      "Id": "m1",
+      "MetricStat": {
+          "Metric": {
+              "Namespace": "AWS/Billing",
+              "MetricName": "AWS Bootcamp billing alert",
+              "Dimensions": [{
+                  "Name": "Currency",
+                  "Value": "USD"
+              }]
+          },
+          "Period": 21600,
+          "Stat": "Maximum"
+      },
+      "ReturnData": false
+  },
+  {
+      "Id": "e1",
+      "Expression": "IF(RATE(m1)>0,RATE(m1)*21600,0)",
+      "Label": "DailyEstimatedCharges",
+      "ReturnData": true
+  }]
+}
